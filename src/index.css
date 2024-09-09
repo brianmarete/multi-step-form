@@ -31,3 +31,8 @@
     font-family: "Ubuntu", system-ui, sans-serif;
   }
 }
+
+.sidebar {
+  background-image: url(/public/bg-sidebar-desktop.svg);
+  background-size: cover;
+}
