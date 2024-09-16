@@ -1,4 +1,4 @@
-const PersonalInfo = () => {
+export function PersonalInfo() {
   return (
     <>
       <h1 className="text-3xl text-marine-blue font-bold my-2">
@@ -37,6 +37,4 @@ const PersonalInfo = () => {
       </form>
     </>
   );
-};
-
-export default PersonalInfo;
+}

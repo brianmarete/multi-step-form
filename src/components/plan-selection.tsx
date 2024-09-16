@@ -1,7 +1,7 @@
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 
-const PlanSelection = () => {
+export function PlanSelection() {
   const [isYearly, setIsYearly] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
@@ -78,6 +78,4 @@ const PlanSelection = () => {
       </div>
     </>
   );
-};
-
-export default PlanSelection;
+}

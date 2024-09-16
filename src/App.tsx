@@ -1,9 +1,10 @@
 import { useState } from "react";
-// import PersonalInfo from "@/components/personal-info";
-import PlanSelection from "@/components/plan-selection";
+// import { PersonalInfo } from "@/components/personal-info";
+// import { PlanSelection} from "@/components/plan-selection";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
+import Addons from "./components/addons";
 
 function App() {
   const steps = ["YOUR INFO", "SELECT PLAN", "ADD-ONS", "SUMMARY"];
@@ -29,7 +30,8 @@ function App() {
         </div>
         <div className="form w-3/4 h-full px-20 py-8">
           {/* <PersonalInfo /> */}
-          <PlanSelection />
+          {/* <PlanSelection /> */}
+          <Addons />
           <div className="flex justify-between">
             <Button
               className={clsx(currentStep === 0 ? "invisible" : "")}
