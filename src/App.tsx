@@ -4,7 +4,8 @@ import { useState } from "react";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
-import Addons from "./components/addons";
+// import Addons from "./components/addons";
+import Summary from "./components/summary";
 
 function App() {
   const steps = ["YOUR INFO", "SELECT PLAN", "ADD-ONS", "SUMMARY"];
@@ -31,7 +32,8 @@ function App() {
         <div className="form w-3/4 h-full px-20 py-8">
           {/* <PersonalInfo /> */}
           {/* <PlanSelection /> */}
-          <Addons />
+          {/* <Addons /> */}
+          <Summary />
           <div className="flex justify-between">
             <Button
               className={clsx(currentStep === 0 ? "invisible" : "")}
