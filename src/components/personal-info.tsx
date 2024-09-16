@@ -1,12 +1,14 @@
-export function PersonalInfo() {
+export default function PersonalInfo() {
   return (
     <>
-      <h1 className="text-3xl text-marine-blue font-bold my-2">
-        Personal info
-      </h1>
-      <p className="text-cool-gray">
-        Please provide your name, email address, and phone number.
-      </p>
+      <div>
+        <h1 className="text-3xl text-marine-blue font-bold my-2">
+          Personal info
+        </h1>
+        <p className="text-cool-gray">
+          Please provide your name, email address, and phone number.
+        </p>
+      </div>
       <form action="">
         <div className="my-3">
           <label htmlFor="name">Name</label>

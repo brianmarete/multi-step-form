@@ -33,10 +33,14 @@ export default function Addons() {
 
   return (
     <>
-      <h2 className="text-3xl font-bold text-indigo-900 mb-2">Pick add-ons</h2>
-      <p className="text-gray-500 mb-6">
-        Add-ons help enhance your gaming experience.
-      </p>
+      <div>
+        <h2 className="text-3xl font-bold text-indigo-900 mb-2">
+          Pick add-ons
+        </h2>
+        <p className="text-cool-gray mb-6">
+          Add-ons help enhance your gaming experience.
+        </p>
+      </div>
 
       <div className="space-y-4">
         {addons.map((addon) => (

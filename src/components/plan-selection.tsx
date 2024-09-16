@@ -1,7 +1,7 @@
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 
-export function PlanSelection() {
+export default function PlanSelection() {
   const [isYearly, setIsYearly] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
@@ -28,12 +28,14 @@ export function PlanSelection() {
 
   return (
     <>
-      <h1 className="text-3xl text-marine-blue font-bold my-2">
-        Select your plan
-      </h1>
-      <p className="text-cool-gray mb-6">
-        You have the option of monthly or yearly billing.
-      </p>
+      <div>
+        <h1 className="text-3xl text-marine-blue font-bold my-2">
+          Select your plan
+        </h1>
+        <p className="text-cool-gray mb-6">
+          You have the option of monthly or yearly billing.
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {plans.map((plan) => (
           <div

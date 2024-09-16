@@ -10,11 +10,12 @@ function PlanItem({ title, price }: { title: string; price: string }) {
 export default function Summary() {
   return (
     <>
-      <h2 className="text-3xl font-bold text-gray-900 mb-2">Finishing up</h2>
-      <p className="text-gray-500 mb-6">
-        Double-check everything looks OK before confirming.
-      </p>
-
+      <div>
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">Finishing up</h2>
+        <p className="text-cool-gray mb-6">
+          Double-check everything looks OK before confirming.
+        </p>
+      </div>
       <div className="bg-gray-50 rounded-lg p-4 mb-6">
         <div className="flex justify-between items-center mb-4">
           <div>

@@ -1,25 +1,37 @@
 import { useState } from "react";
-// import { PersonalInfo } from "@/components/personal-info";
-// import { PlanSelection} from "@/components/plan-selection";
+import {
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
+import PersonalInfo from "@/components/personal-info";
+import PlanSelection from "@/components/plan-selection";
+import Addons from "@/components/addons";
+import Summary from "@/components/summary";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
-// import Addons from "./components/addons";
-import Summary from "./components/summary";
 
 function App() {
   const steps = ["YOUR INFO", "SELECT PLAN", "ADD-ONS", "SUMMARY"];
-  const [currentStep, setCurrentStep] = useState(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const currentStep = steps.findIndex(
+    (step) => location.pathname === "/" + step.toLowerCase().replace(" ", "-")
+  );
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+      navigate("/" + steps[currentStep + 1].toLowerCase().replace(" ", "-"));
     }
   };
 
   const handleBack = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+      navigate("/" + steps[currentStep - 1].toLowerCase().replace(" ", "-"));
     }
   };
 
@@ -29,11 +41,14 @@ function App() {
         <div className="sidebar w-1/4 h-full rounded-md p-8">
           <StepIndicator currentStep={currentStep} steps={steps} />
         </div>
-        <div className="form w-3/4 h-full px-20 py-8">
-          {/* <PersonalInfo /> */}
-          {/* <PlanSelection /> */}
-          {/* <Addons /> */}
-          <Summary />
+        <div className="grid grid-rows[1fr_auto] w-3/4 h-full px-20 py-8">
+          <Routes>
+            <Route path="/" element={<Navigate to="/your-info" replace />} />
+            <Route path="/your-info" element={<PersonalInfo />} />
+            <Route path="/select-plan" element={<PlanSelection />} />
+            <Route path="/add-ons" element={<Addons />} />
+            <Route path="/summary" element={<Summary />} />
+          </Routes>
           <div className="flex justify-between">
             <Button
               className={clsx(currentStep === 0 ? "invisible" : "")}
