@@ -1,31 +1,21 @@
 import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
+import { Plan, PriceType } from "@/types";
 
-export default function PlanSelection() {
-  const [isYearly, setIsYearly] = useState(true);
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+type Props = {
+  plans: Plan[];
+  selectedPlan: Plan;
+  onPlanChange: (planId: Plan) => void;
+  selectedPriceType: PriceType;
+  onPriceTypeToggle: () => void;
+};
 
-  const plans = [
-    {
-      name: "Arcade",
-      icon: "/icon-arcade.svg",
-      monthlyPrice: 9,
-      yearlyPrice: 90,
-    },
-    {
-      name: "Advanced",
-      icon: "/icon-advanced.svg",
-      monthlyPrice: 12,
-      yearlyPrice: 120,
-    },
-    {
-      name: "Pro",
-      icon: "/icon-pro.svg",
-      monthlyPrice: 15,
-      yearlyPrice: 150,
-    },
-  ];
-
+export default function PlanSelection({
+  plans,
+  selectedPlan,
+  onPlanChange,
+  selectedPriceType,
+  onPriceTypeToggle,
+}: Props) {
   return (
     <>
       <div>
@@ -41,20 +31,22 @@ export default function PlanSelection() {
           <div
             key={plan.name}
             className={`h-44 flex flex-col justify-between border rounded-lg p-4 cursor-pointer hover:border-indigo-600 transition-colors ${
-              selectedPlan === plan.name
-                ? "bg-magnolia"
+              selectedPlan.name === plan.name
+                ? "bg-magnolia border-indigo-600"
                 : "hover:border-indigo-600"
             }`}
-            onClick={() => setSelectedPlan(plan.name)}
+            onClick={() => onPlanChange(plan)}
           >
-            <img src={plan.icon} alt="" className="w-10" />
+            <img src={`/icon-${plan.icon}.svg`} alt="" className="w-10" />
             <div>
               <h3 className="font-bold text-marine-blue">{plan.name}</h3>
               <p className="text-cool-gray font-semibold text-sm">
-                ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}/
-                {isYearly ? "yr" : "mo"}
+                $
+                {selectedPriceType === "yearly"
+                  ? plan.yearlyPrice
+                  : plan.monthlyPrice}
               </p>
-              {isYearly && (
+              {selectedPriceType === "yearly" && (
                 <p className="text-marine-blue text-xs">2 months free</p>
               )}
             </div>
@@ -64,15 +56,22 @@ export default function PlanSelection() {
       <div className="flex items-center justify-center space-x-4 bg-gray-100 p-3 rounded-lg mb-6">
         <span
           className={`font-bold ${
-            !isYearly ? "text-marine-blue" : "text-cool-gray"
+            selectedPriceType === "monthly"
+              ? "text-marine-blue"
+              : "text-cool-gray"
           }`}
         >
           Monthly
         </span>
-        <Switch checked={isYearly} onCheckedChange={setIsYearly} />
+        <Switch
+          checked={selectedPriceType === "yearly"}
+          onCheckedChange={onPriceTypeToggle}
+        />
         <span
           className={`font-bold ${
-            isYearly ? "text-marine-blue" : "text-cool-gray"
+            selectedPriceType === "yearly"
+              ? "text-marine-blue"
+              : "text-cool-gray"
           }`}
         >
           Yearly

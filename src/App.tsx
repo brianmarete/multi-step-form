@@ -1,3 +1,4 @@
+import { useReducer } from "react";
 import {
   Route,
   Routes,
@@ -12,11 +13,14 @@ import Summary from "@/components/summary";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
+import { initialState, reducer } from "./state";
+import { planAddons, plans } from "./types";
 
 function App() {
   const steps = ["YOUR INFO", "SELECT PLAN", "ADD-ONS", "SUMMARY"];
   const location = useLocation();
   const navigate = useNavigate();
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const currentStep = steps.findIndex(
     (step) => location.pathname === "/" + step.toLowerCase().replace(" ", "-")
@@ -43,10 +47,64 @@ function App() {
         <div className="grid grid-rows[1fr_auto] w-3/4 h-full px-20 py-8">
           <Routes>
             <Route path="/" element={<Navigate to="/your-info" replace />} />
-            <Route path="/your-info" element={<PersonalInfo />} />
-            <Route path="/select-plan" element={<PlanSelection />} />
-            <Route path="/add-ons" element={<Addons />} />
-            <Route path="/summary" element={<Summary />} />
+            <Route
+              path="/your-info"
+              element={
+                <PersonalInfo
+                  initialName={state.name}
+                  initialEmail={state.email}
+                  initialPhoneNumber={state.phoneNumber}
+                  onSubmit={(result) => {
+                    dispatch({
+                      type: "UPDATE_PERSONAL_INFO",
+                      name: result.name,
+                      email: result.email,
+                      phoneNumber: result.phone,
+                    });
+                    handleNext();
+                  }}
+                />
+              }
+            />
+            <Route
+              path="/select-plan"
+              element={
+                <PlanSelection
+                  plans={plans}
+                  selectedPlan={state.plan}
+                  onPlanChange={(plan) =>
+                    dispatch({ type: "UPDATE_PLAN", plan })
+                  }
+                  selectedPriceType={state.priceType}
+                  onPriceTypeToggle={() =>
+                    dispatch({ type: "TOGGLE_PRICE_TYPE" })
+                  }
+                />
+              }
+            />
+            <Route
+              path="/add-ons"
+              element={
+                <Addons
+                  addons={planAddons}
+                  priceType={state.priceType}
+                  checkedAddons={state.addons}
+                  onToggleAddon={(addon) =>
+                    dispatch({ type: "TOGGLE_PLAN_ADDON", addon })
+                  }
+                />
+              }
+            />
+            <Route
+              path="/summary"
+              element={
+                <Summary
+                  plan={state.plan}
+                  addons={state.addons}
+                  priceType={state.priceType}
+                />
+              }
+            />
           </Routes>
           <div className="flex justify-between">
             <Button

@@ -1,35 +1,20 @@
-import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PlanAddon, PriceType } from "@/types";
 
-export default function Addons() {
-  const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
+type Props = {
+  addons: PlanAddon[];
+  checkedAddons: Set<PlanAddon>;
+  onToggleAddon: (addon: PlanAddon) => void;
+  priceType: PriceType;
+};
 
-  const addons = [
-    {
-      id: "online",
-      name: "Online service",
-      description: "Access to multiplayer games",
-      price: "+$1/mo",
-    },
-    {
-      id: "storage",
-      name: "Larger storage",
-      description: "Extra 1TB of cloud save",
-      price: "+$2/mo",
-    },
-    {
-      id: "profile",
-      name: "Customizable profile",
-      description: "Custom theme on your profile",
-      price: "+$2/mo",
-    },
-  ];
-
-  const toggleAddon = (id: string) => {
-    setSelectedAddons((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
+export default function Addons({
+  addons,
+  checkedAddons,
+  onToggleAddon,
+  priceType,
+}: Props) {
+  const isMonthly = priceType === "monthly";
 
   return (
     <>
@@ -47,16 +32,17 @@ export default function Addons() {
           <div
             key={addon.id}
             className={`flex items-center justify-between p-4 border rounded-lg ${
-              selectedAddons.includes(addon.id)
+              checkedAddons.has(addon)
                 ? "border-indigo-600 bg-indigo-50"
                 : "border-gray-200"
             }`}
           >
             <div className="flex items-center space-x-4">
               <Checkbox
+                className="data-[state=checked]:bg-purplish-blue data-[state=unchecked]:bg-white"
                 id={addon.id}
-                checked={selectedAddons.includes(addon.id)}
-                onCheckedChange={() => toggleAddon(addon.id)}
+                checked={checkedAddons.has(addon)}
+                onCheckedChange={() => onToggleAddon(addon)}
               />
               <div>
                 <label
@@ -68,7 +54,10 @@ export default function Addons() {
                 <p className="text-sm text-gray-500">{addon.description}</p>
               </div>
             </div>
-            <span className="text-indigo-600 font-semibold">{addon.price}</span>
+            <span className="text-indigo-600 font-semibold">
+              ${isMonthly ? addon.monthlyPrice : addon.yearlyPrice}/
+              {isMonthly ? "mo" : "yr"}
+            </span>
           </div>
         ))}
       </div>
