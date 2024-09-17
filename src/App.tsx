@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Route,
   Routes,
@@ -58,12 +57,12 @@ function App() {
               Go Back
             </Button>
             <Button
-              className={clsx(
-                currentStep === steps.length - 1 ? "invisible" : ""
-              )}
+              className={
+                currentStep === steps.length - 1 ? "hover:bg-purplish-blue" : ""
+              }
               onClick={handleNext}
             >
-              Next Step
+              {currentStep === steps.length - 1 ? "Confirm" : "Next Step"}
             </Button>
           </div>
         </div>
