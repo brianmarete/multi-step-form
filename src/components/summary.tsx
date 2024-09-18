@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Plan, PlanAddon, PriceType, planAddons } from "@/config";
+import { Plan, PlanAddon, PriceType, planAddons } from "@/types";
 
 type Props = {
   plan: Plan;
